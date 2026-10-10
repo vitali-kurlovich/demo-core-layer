@@ -39,10 +39,10 @@ jobs:
         run: mkdir pages 
       
       - name: Generate DocC CoreLayer
-        run: mkdir ./pages/datalayer && swift package --allow-writing-to-directory ./.docs generate-documentation --target CoreLayer --output-path ./.docs --disable-indexing --transform-for-static-hosting --hosting-base-path demo-core-layer/datalayer
+        run: mkdir ./pages/corelayer && swift package --allow-writing-to-directory ./.docs generate-documentation --target CoreLayer --output-path ./.docs --disable-indexing --transform-for-static-hosting --hosting-base-path demo-core-layer/corelayer
 
       - name: Copy generated content into pages dir
-        run: cp -r ./.docs/* ./pages/datalayer 
+        run: cp -r ./.docs/* ./pages/corelayer 
 
       
       - name: Setup Pages
