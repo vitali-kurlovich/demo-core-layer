@@ -13,7 +13,7 @@ struct KeyValueStorageUpdaterTest {
 
         let values = [1, 2, 3]
 
-        let stream = MocAsyncStream<Int, Never>(values, period: .microseconds(1))
+        let stream = MocAsyncStream<Int, Never>(values, period: .milliseconds(100))
 
         let updater = KeyValueStorageUpdater(keyValue) { value in
             "\(value)"
@@ -34,7 +34,7 @@ struct KeyValueStorageUpdaterTest {
 
         let values = [1, 2, 3]
 
-        let stream = MocAsyncStream<Int, MocKeyValueError>(values, period: .microseconds(1))
+        let stream = MocAsyncStream<Int, MocKeyValueError>(values, period: .milliseconds(100))
 
         let updater = KeyValueStorageUpdater(
             keyValue
@@ -67,10 +67,13 @@ struct KeyValueStorageUpdaterTest {
 
         let stream = MocAsyncStream<Int, Never>(
             values,
-            period: .microseconds(1)
+            period: .milliseconds(100)
         )
 
-        await confirmation("handleError is called") { confirm in
+        await confirmation(
+            "handleError is called",
+            expectedCount: 3
+        ) { confirm in
             let updater = KeyValueStorageUpdater(
                 keyValue,
                 handleError: { error in
