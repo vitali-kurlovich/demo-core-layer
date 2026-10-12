@@ -9,7 +9,7 @@ import Testing
 struct MapKeyValueReaderTest {
     @Test
     func `map`() async throws {
-        let keyValue = MocKeyValue<Int, String>(storage: [1: "1"])
+        let keyValue = MocThrowsKeyValue<Int, String>(storage: [1: "1"])
 
         let mapKeyValue = keyValue.map {
             "\($0)$"
