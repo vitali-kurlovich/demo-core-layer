@@ -6,16 +6,15 @@ import PackageDescription
 let package = Package(
     name: "demo-core-layer",
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "CoreLayer",
             targets: ["CoreLayer"]
         ),
     ],
     dependencies: [
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/swiftlang/swift-docc-plugin", from: "1.1.0"),
     ],
-
     targets: [
         .target(
             name: "CoreLayer"
@@ -23,7 +22,10 @@ let package = Package(
         ),
         .testTarget(
             name: "CoreLayerTests",
-            dependencies: ["CoreLayer"]
+            dependencies: [
+                "CoreLayer",
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+            ]
 
         ),
     ],
