@@ -63,7 +63,7 @@ public extension ValueStorageReader where Self: ValueStorageWriter {
     func map<MapValue>(_ readTransform: @escaping @Sendable (Value) -> MapValue,
                        write writeTransform: @escaping @Sendable (MapValue) -> Value?) ->
 
-        some ValueStorageReader<MapValue, Self.Failed> & ValueStorageWriter<MapValue, Self.Failed>
+        some ValueStorageReader<MapValue, Self.Failed> & ValueStorageWriter<MapValue, Self.Failed> & Sendable where Self: Sendable
     {
         MapValueStorageReaderWriter(self, self, readTransform: readTransform, writeTransform: writeTransform)
     }

@@ -34,7 +34,7 @@ extension MapValueStorageWriter: Sendable where Writer: Sendable {}
 
 public extension ValueStorageWriter {
     @inlinable
-    func map<MapValue>(_: MapValue.Type, writeTransform: @escaping @Sendable (MapValue) -> Self.Value) -> some ValueStorageWriter<MapValue, Self.Failed> {
+    func map<MapValue>(_: MapValue.Type, writeTransform: @escaping @Sendable (MapValue) -> Self.Value) -> some ValueStorageWriter<MapValue, Self.Failed> & Sendable where Self: Sendable {
         MapValueStorageWriter(writer: self, transform: writeTransform)
     }
 }

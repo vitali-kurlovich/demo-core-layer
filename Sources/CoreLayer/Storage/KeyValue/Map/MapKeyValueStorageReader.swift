@@ -28,7 +28,7 @@ public struct MapKeyValueStorageReader<Reader: KeyValueStorageReader, MapValue>:
 
 public extension KeyValueStorageReader {
     @inlinable
-    func map<MapValue>(_ transform: @escaping @Sendable (Self.Value) -> MapValue) -> some KeyValueStorageReader<Self.Key, MapValue, Self.Failed> {
+    func map<MapValue>(_ transform: @escaping @Sendable (Self.Value) -> MapValue) -> some KeyValueStorageReader<Self.Key, MapValue, Self.Failed> & Sendable where Self: Sendable {
         MapKeyValueStorageReader(reader: self, transform: transform)
     }
 }

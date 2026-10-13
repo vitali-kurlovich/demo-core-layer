@@ -32,7 +32,7 @@ extension MapKeyValueStorageWriter: KeyValueStorageWriter<Writer.Key, MapValue, 
 
 public extension KeyValueStorageWriter {
     @inlinable
-    func map<MapValue>(_: MapValue.Type, writeTransform: @escaping @Sendable (MapValue) -> Self.Value) -> some KeyValueStorageWriter<Self.Key, MapValue, Self.Failed> {
+    func map<MapValue>(_: MapValue.Type, writeTransform: @escaping @Sendable (MapValue) -> Self.Value) -> some KeyValueStorageWriter<Self.Key, MapValue, Self.Failed> & Sendable where Self: Sendable {
         MapKeyValueStorageWriter(writer: self, transform: writeTransform)
     }
 }

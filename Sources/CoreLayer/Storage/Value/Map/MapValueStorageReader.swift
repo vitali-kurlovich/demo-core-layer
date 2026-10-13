@@ -28,7 +28,7 @@ public struct MapValueStorageReader<Reader: ValueStorageReader, MapValue>: Value
 
 public extension ValueStorageReader {
     @inlinable
-    func map<MapValue>(_ transform: @escaping @Sendable (Self.Value) -> MapValue) -> some ValueStorageReader<MapValue, Self.Failed> {
+    func map<MapValue>(_ transform: @escaping @Sendable (Self.Value) -> MapValue) -> some ValueStorageReader<MapValue, Self.Failed> & Sendable where Self: Sendable {
         MapValueStorageReader(reader: self, transform: transform)
     }
 }
