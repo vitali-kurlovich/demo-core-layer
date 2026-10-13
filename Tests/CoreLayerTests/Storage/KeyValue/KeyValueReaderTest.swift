@@ -9,32 +9,35 @@ import Testing
 struct KeyValueReaderTest {
     @Test
     func read() async {
-        let keyValue = MocKeyValue<Int, String>()
-        #expect(await keyValue.storage.isEmpty)
+        var storage = MocKeyValue<Int, String>()
+        #expect(await storage.storage.isEmpty)
 
-        await keyValue.write(by: 1, value: "1")
+        storage = MocKeyValue<Int, String>(storage: [1: "1"])
 
-        #expect(await keyValue.readValue(by: 1) == "1")
-        #expect(await keyValue.readValue(by: 2) == nil)
+        #expect(await storage.readValue(by: 1) == "1")
+        #expect(await storage.readValue(by: 2) == nil)
     }
 
     @Test
     func readThrows() async throws {
-        let keyValue = MocThrowsKeyValue<Int, String>()
-        #expect(await keyValue.storage.isEmpty)
+        let storage = MocThrowsKeyValue<Int, String>(
+            storage: [1: "1"],
+            error: nil
+        )
 
-        try await keyValue.write(by: 1, value: "1")
-
-        #expect(try await keyValue.readValue(by: 1) == "1")
-        #expect(try await keyValue.readValue(by: 2) == nil)
+        #expect(try await storage.readValue(by: 1) == "1")
+        #expect(try await storage.readValue(by: 2) == nil)
     }
 
     @Test
     func readThrowsWithError() async throws {
-        let keyValue = MocThrowsKeyValue<Int, String>(error: .readFailed)
+        let storage = MocThrowsKeyValue<Int, String>(
+            storage: [1: "1"],
+            error: .readFailed
+        )
 
         await #expect(throws: MocKeyValueError.readFailed) {
-            try await keyValue.readValue(by: 1)
+            try await storage.readValue(by: 1)
         }
     }
 }

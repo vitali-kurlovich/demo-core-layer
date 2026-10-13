@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 10/9/26.
 //
 
-public struct MapKeyValueStorageWriter<Writer: KeyValueStorageWriter, MapValue>: KeyValueStorageWriter<Writer.Key, MapValue, Writer.Failed> {
+public struct MapKeyValueStorageWriter<Writer: KeyValueStorageWriter, MapValue> {
     public typealias Transform = @Sendable (MapValue) -> Writer.Value?
 
     @usableFromInline
@@ -17,9 +17,9 @@ public struct MapKeyValueStorageWriter<Writer: KeyValueStorageWriter, MapValue>:
     }
 }
 
-public extension MapKeyValueStorageWriter {
+extension MapKeyValueStorageWriter: KeyValueStorageWriter<Writer.Key, MapValue, Writer.Failed> {
     @inlinable
-    func write(by key: Writer.Key, value: MapValue?) async throws(
+    public func write(by key: Writer.Key, value: MapValue?) async throws(
         Writer.Failed
     ) {
         if let value {
